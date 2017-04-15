@@ -1,5 +1,6 @@
 import discord
 from time import sleep
+from datetime import datetime
 from random import choice
 from os import getcwd, path
 
@@ -17,7 +18,7 @@ if not discord.opus.is_loaded():
     discord.opus.load_opus('opus')
 
 
-sounds = [
+healz = [
     'soldier.ogg',
     'genji.ogg',
     'mccree.mp3',
@@ -44,23 +45,70 @@ japanese = [
     'joto.ogg',
     'sono.ogg',
     'honki.ogg',
-    'dragonblade.ogg',
-    'mizu.ogg',
-    'dragonstrike.ogg'
+    'mizu.ogg'
 ]
 
-info = """!healing,
-!tranquility,
-!sights,
-!maths,
-!cheers,
-!sake,
-!mada,
-!jap
+zen = [
+    'walkinharmoony.ogg',
+    'reborn.ogg',
+    'universe.ogg',
+    'embrace.ogg',
+    'freemind.ogg',
+    'gaze.ogg',
+    'open.ogg',
+    'walk.ogg',
+    'trueself.ogg',
+    'focus.ogg',
+    'closedmind.ogg',
+    'disciplined.ogg',
+    'patient.ogg',
+    'onlyvictory.ogg',
+    'momentary.ogg',
+    'temporary.ogg',
+    'adversity.ogg',
+    'outcome.ogg',
+    'overconfidence.ogg',
+    'pain.ogg',
+    'repetition.ogg',
+    'thecycle.ogg',
+    'reward.ogg',
+    'wadversity.ogg',
+    'extinguisher.ogg'
+]
+
+info = """
+*healing
+*tranquility
+*sights
+*maths
+*cheers
+*sake
+*mada
+*jap
+*freeze
+*barbaric
+*dblade
+*dstrike
+*die
+*lift
+*ruski
+*aimbot
+*molten
+*bringiton
+*allyouhave
+*hammer
+*boost
+*medic
+*sorry
+*hi
+*zen
+*online
+*propagando
+*time
 """
 
 sounds = {
-    'healing': sounds,
+    'healing': healz,
     'jap': japanese,
     'tranquility': ['tranquility.ogg'],
     'sights': ['sights.ogg'],
@@ -68,21 +116,40 @@ sounds = {
     'cheers': ['cavalry.ogg'],
     'sake': ['sake.ogg'],
     'mada': ['mada.ogg'],
-
+    'freeze': ['freeze.ogg'],
+    'barbaric': ['barbaric.ogg'],
+    'dblade': ['dragonblade.ogg'],
+    'dstrike': ['dragonstrike.ogg'],
+    'die': ['die.ogg'],
+    'lift': ['lift.ogg'],
+    'ruski': ['ogon.ogg'],
+    'aimbot': ['aimbot.ogg'],
+    'molten': ['molten.ogg'],
+    'bringiton': ['bringiton.ogg'],
+    'allyouhave': ['allyouhave.ogg'],
+    'hammer': ['hammer.ogg'],
+    'boost': ['boost.ogg', 'speed.ogg'],
+    'medic': ['medic.mp3'],
+    'sorry': ['sorry.mp3'],
+    'hi': ['hi.mp3'],
+    'zen': zen,
+    'online': ['online.ogg'],
+    'propagando': ['propagando.ogg'],
+    'time': ['noon.ogg']
 }
 
-players = []
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
-    if message.content.startswith('!help'):
+    if message.content.startswith('*help'):
         await client.send_message(message.channel, info)
+        print('{0} :- Displaying help for {1}'.format(datetime.now(), message.author))
         return
     for key, value in sounds.items():
-        if message.content.startswith('!'+key):
-            print('Playing {0} for {1}'.format(key, message.author))
+        if message.content.startswith('*'+key):
+            print('{0} :- Playing {1} for {2}'.format(datetime.now(), key, message.author))
             sender = message.author
             voice_channel = sender.voice.voice_channel
             voice_client = await client.join_voice_channel(voice_channel)
